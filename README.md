@@ -17,7 +17,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 ## ❓ O que é este projeto?
 
-Este projeto é baseado neste [desafio de programação](https://www.proway.com.br/desafiopubfuture), onde deve-se criar um aplicativo para gerenciar finanças pessoais
+Administrador de Finanças, onde deve-se criar um aplicativo para gerenciar finanças pessoais
 
 ## 🚀 Como executar
 
@@ -27,7 +27,7 @@ O primeiro passo é possuir o Git instalado em seu computador. Caso não possua,
 $ git --version # Caso possua git instalado, aparecerá na tela o número da versão
 ```
 
-Clone o projeto utilizando a url HTTPS, em uma pasta de sua preferência, clicando em clone na [página do repositório do projeto](https://github.com/victorhostert/DesafioPubFuture), selecionando a opção para copiar o repositório por HTTPS, copiando a url e utilizando o seguinte comando:
+Clone o projeto utilizando a url HTTPS, em uma pasta de sua preferência, clicando em clone na [página do repositório do projeto](https://github.com/Sr-Cortez/UC-PDS.git), selecionando a opção para copiar o repositório por HTTPS, copiando a url e utilizando o seguinte comando:
 
 ```bash
 $ git clone <URL HTTPS>
