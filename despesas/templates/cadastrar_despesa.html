@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Administrador de Finanças{% endblock %}
+
+{% block 'conteudo' %}
+<div class="wrapper">
+    <div class="formulario">
+        <h2>Cadastrar uma nova despesa:</h2>
+        <form action="{% url 'despesas:cadastrar' conta.id %}" method="post">
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">Cadastrar despesa</button>
+        </form>
+    </div>
+</div>
+<script>
+    /* Máscara para os campos definidos pelo id */
+    $('#id_valor').mask('#.00', {reverse: true});
+    $('#id_dataPagamento').mask('00/00/0000');
+    $('#id_dataPagamentoEsperado').mask('00/00/0000');
+</script>
+{% endblock %}

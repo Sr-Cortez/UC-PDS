@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Administrador de Finanças{% endblock %}
+
+{% block 'conteudo' %}
+<div class="wrapper">
+    <div class="formulario">
+        <h1>Filtrar contas</h1>
+        <form action="{% url 'contas:filtrar' %}" method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                {% if field.name != "saldo_min" and field.name != "saldo_max" %}
+                    {% if form.errors %}
+                        {% for error in field.errors %}
+                            <strong class="errorList">{{ error|escape }}</strong>
+                        {% endfor %}
+                    {% endif %}
+                    <label>{{ field.label }}</label>
+                    {{ field }}
+                {% endif %}
+            {% endfor %}
+            <div class="saldo_field">
+                <p>Saldo</p>
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% if field.name == "saldo_min" or field.name == "saldo_max" %}
+                            {% for error in field.errors %}
+                                <strong class="errorList">{{ error|escape }}</strong>
+                            {% endfor %}
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+                <p>{{ form.saldo_min }} {{ form.saldo_max }}</p>
+            </div>
+            <button type="submit">Pesquisar</button>
+        </form>
+    </div>
+</div>
+<script>
+    /* Máscara para os campos definidos pelo id */
+    $('#id_salario_min').mask('#.00', {reverse: true});
+    $('#id_salario_max').mask('#.00', {reverse: true});
+</script>
+{% endblock %}

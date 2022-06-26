@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Administrador de Finanças{% endblock %}
+
+{% block 'conteudo' %}
+<div class="wrapper">
+    <div class="formulario">
+        <div class="deletar_objeto">
+            <h1>Deseja mesmo deletar esta conta?</h1>
+            <h2>{{ conta.instituicaoFinanceira }} - {{ conta.get_tipoConta_display }}</h2>
+            <div class="deletar_objeto_buttons">
+                <form action="{% url 'contas:deletar' conta.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Sim</button>
+                </form>
+                <button><a href="{% url 'contas:detalhe' conta.id %}">Não</a></button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

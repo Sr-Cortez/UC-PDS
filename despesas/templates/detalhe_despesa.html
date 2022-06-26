@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Administrador de Finanças{% endblock %}
+
+{% block 'conteudo' %}
+    <div class="detalhes_despesa_receita">
+        <h1>Despesa</h1>
+        <h2>Tipo: {{despesa.get_tipoDespesa_display}}</h2>
+        <p>Valor: R$ {{despesa.valor|floatformat:2}}</p>
+        <p>Pago em: {{despesa.dataPagamento}}</p>
+        {% if despesa.dataPagamentoEsperado %}
+            <p>Esperado o pagamento em: {{despesa.dataPagamentoEsperado}}</p>
+        {% endif %}
+        <a href="{% url 'contas:detalhe' despesa.conta.id %}"><button>Voltar para a conta</button></a>
+        <div class="atualizar_excluir">
+            <a href="{% url 'despesas:atualizar' despesa.id %}"><i class="fas fa-pen-alt"></i></a>
+            <a href="{% url 'despesas:deletar' despesa.id %}"><i class="fas fa-trash-alt"></i></a>
+        </div>
+    </div>
+{% endblock %}

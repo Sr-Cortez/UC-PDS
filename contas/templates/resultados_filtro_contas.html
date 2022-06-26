@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Administrador de Finanças{% endblock %}
+
+{% block 'conteudo' %}
+<div class="wrapper">
+    {% if contas %}
+    <div class="resultados_table">
+        <h1>Resultados da pesquisa:</h1>
+        <table>
+            <thead>
+                <th>Instituição</th>
+                <th>Tipo</th>
+                <th>Saldo</th>
+                <th>Atualizar</th>
+                <th>Deletar</th>
+            </thead>
+            <tbody>
+                {% for conta in contas %}
+                    <div class="resultado">
+                        <tr>
+                            <td><a href="{% url 'contas:detalhe' conta.id %}">{{ conta.instituicaoFinanceira }}</a></td>
+                            <td><a href="{% url 'contas:detalhe' conta.id %}">{{ conta.get_tipoConta_display }}</a></td>
+                            <td><a href="{% url 'contas:detalhe' conta.id %}">R$ {{ conta.saldo|floatformat:2 }}</a></td>
+                            <td><a href="{% url 'contas:atualizar' conta.id %}"><i class="fas fa-pen-alt"></i></a></td>
+                            <td><a href="{% url 'contas:deletar' conta.id %}"><i class="fas fa-trash-alt"></i></a></td>
+                        </tr>
+                    </div>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{% url 'contas:filtrar' %}"><button>Fazer outra pesquisa</button></a>   
+    </div>
+    {% else %}
+        <div class="nao_gerou_resultados">
+            <h1>Sua pesquisa não gerou resultados</h1>
+            <a href="{% url 'receitas:filtrar' %}"><button>Clique aqui para pesquisar por outros termos</button></a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Administrador de Finanças{% endblock %}
+
+{% block 'conteudo' %}
+{% if contas %}
+    <div class="wrapper">
+        <div class="wrapper_homepage">
+            <h1>Escolha uma conta:</h1>
+            <table class="contas_homepage">
+                <tr>
+                    <th>Instituição Financeira</th>
+                    <th>Tipo de Conta</th>
+                    <th>Saldo</th>
+                    <th>Atualizar</th>
+                    <th>Deletar</th>
+                </tr>
+                {% for conta in contas %}
+                    <tr>
+                        <td><a href="{% url 'contas:detalhe' conta.id %}">{{conta.instituicaoFinanceira}}</a></td>
+                        <td><a href="{% url 'contas:detalhe' conta.id %}">{{conta.get_tipoConta_display}}</a></td>
+                        <td><a href="{% url 'contas:detalhe' conta.id %}">R$ {{conta.saldo|floatformat:2}}</a></td>
+                        <td><a href="{% url 'contas:atualizar' conta.id %}"><i class="fas fa-pen-alt"></i></a></td>
+                        <td><a href="{% url 'contas:deletar' conta.id %}"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="pagination">
+                {% if contas.has_previous %}
+                    <a href="?page=1">&laquo; Primeira</a>
+                    <a href="?page={{contas.previous_page_number}}">Anterior</a>
+                    <span class="current">
+                        Página {{ contas.number }} de {{ contas.paginator.num_pages }}
+                    </span>
+                {% endif %}
+    
+    
+                {% if contas.has_next %}
+                    <a href="?page={{ contas.next_page_number }}">Próxima</a>
+                    <a href="?page={{ contas.paginator.num_pages }}">Última &raquo;</a>
+                {% endif %}
+            </div>
+            <div class="saldo_total">
+                <p>Saldo total: R$ {{saldo_total|floatformat:2}}</p>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="wrapper">
+        <div class="introducao">
+            <h1>Administrador de Finanças</h1>
+            <ul>
+                <li>Para usar este programa, comece criando uma conta, e em seguida adicione suas receitas e despesas</li></li>
+                <li>Após cadastrar alguns dados, você pode usar o botão filtrar no canto superior direito da tela para achar </li></li>    
+                <li>Você terá vários filtros, para contas, receitas e despesas, podendo ver todas elas por lá também</li>
+            </ul>
+            <a href="{% url 'contas:cadastrar' %}"><button>Cadastre uma conta</button></a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}

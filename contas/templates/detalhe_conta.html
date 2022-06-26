@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block 'titulo' %}Administrador de Finanças{% endblock %}
+
+{% block 'conteudo' %}
+<div class="wrapper">
+    <h1>Conta: {{conta.get_tipoConta_display}}</h1>
+    <h2>Saldo: R$ {{conta.saldo|floatformat:2}}</h2>
+    <div class="grid_detalhe_conta">
+        {% if receitas %}
+        <div class="receitas_despesas_conta">
+            <table>
+                <div class="tabela_titulo">
+                    <h2>Receitas</h2>
+                </div>
+                <tr>
+                    <th>Tipo de Receita</th>
+                    <th>Data Recebimento</th>
+                    <th>Data Recebimento Esperado</th>
+                    <th>Valor</th>
+                    <th>Atualizar</th>
+                    <th>Deletar</th>
+                </tr>
+                {% for receita in receitas %}
+                <tr>
+                    <td><a href="{% url 'receitas:detalhe' receita.id %}">{{receita.get_tipoReceita_display}}</a></td>
+                    <td><a href="{% url 'receitas:detalhe' receita.id %}">{{receita.dataRecebimento}}</a></td>
+                    {% if receita.dataRecebimentoEsperado %}
+                        <td><a href="{% url 'receitas:detalhe' receita.id %}">{{receita.dataRecebimentoEsperado}}</a></td>
+                    {% else %}
+                        <td><a href="{% url 'receitas:detalhe' receita.id %}">Nenhuma</a></td>
+                    {% endif %}
+                    <td><a href="{% url 'receitas:detalhe' receita.id %}">R$ {{receita.valor|floatformat:2}}</a></td>
+                    <td><a href="{% url 'receitas:atualizar' receita.id %}"><i class="fas fa-pen-alt"></i></a></td>
+                    <td><a href="{% url 'receitas:deletar' receita.id %}"><i class="fas fa-trash-alt"></i></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            
+            <div class="pagination">
+                {% if receitas.has_previous %}
+                <a href="?page=1">&laquo; Primeira</a>
+                <a href="?page={{receitas.previous_page_number}}">Anterior</a>
+                <span class="current">
+                    Página {{ receitas.number }} de {{ receitas.paginator.num_pages }}
+                </span>
+                {% endif %}
+                
+                
+                {% if receitas.has_next %}
+                <a href="?page={{ receitas.next_page_number }}">Próxima</a>
+                <a href="?page={{ receitas.paginator.num_pages }}">Última &raquo;</a>
+                {% endif %}
+            </div>
+        </div>
+        {% else %}
+        <div class="cadastro_despesa_receita">
+            <h2>Nenhuma receita por enquanto</h2>
+        </div>
+        {% endif %}
+        <div class="botao_cadastro">
+            <button><a href="{% url 'receitas:cadastrar' conta.id %}">Cadastrar uma receita</a></button>
+        </div>
+
+
+        {% if despesas %}
+            <div class="receitas_despesas_conta">
+                <table>
+                    <div class="tabela_titulo">
+                        <h2>Despesas</h2>
+                    </div>
+                    <tr>
+                        <th>Tipo de Despesa</th>
+                        <th>Data Recebimento</th>
+                        <th>Data Recebimento Esperado</th>
+                        <th>Valor</th>
+                        <th>Atualizar</th>
+                        <th>Deletar</th>
+                    </tr>
+                    {% for despesa in despesas %}
+                        <tr>
+                            <td><a href="{% url 'despesas:detalhe' despesa.id %}">{{despesa.get_tipoDespesa_display}}</a></td>
+                            <td><a href="{% url 'despesas:detalhe' despesa.id %}">{{despesa.dataPagamento}}</a></td>
+                            {% if despesa.dataPagamentoEsperado %}
+                                <td><a href="{% url 'despesas:detalhe' despesa.id %}">{{despesa.dataPagamentoEsperado}}</a></td>
+                            {% else %}
+                                <td><a href="{% url 'despesas:detalhe' despesa.id %}">Nenhuma</a></td>
+                            {% endif %}                            
+                            <td><a href="{% url 'despesas:detalhe' despesa.id %}">R$ {{despesa.valor|floatformat:2}}</a></td>
+                            <td><a href="{% url 'despesas:atualizar' despesa.id %}"><i class="fas fa-pen-alt"></i></a></td>
+                            <td><a href="{% url 'despesas:deletar' despesa.id %}"><i class="fas fa-trash-alt"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+
+                <div class="pagination">
+                    {% if receitas.has_previous %}
+                        <a href="?page=1">&laquo; Primeira</a>
+                        <a href="?page={{receitas.previous_page_number}}">Anterior</a>
+                        <span class="current">
+                            Página {{ receitas.number }} de {{ receitas.paginator.num_pages }}
+                        </span>
+                    {% endif %}
+        
+        
+                    {% if receitas.has_next %}
+                        <a href="?page={{ receitas.next_page_number }}">Próxima</a>
+                        <a href="?page={{ receitas.paginator.num_pages }}">Última &raquo;</a>
+                    {% endif %}
+                </div>
+
+            </div>
+            
+            {% else %}
+            <div class="cadastro_despesa_receita">
+                <h2>Nenhuma despesa por enquanto</h2>
+            </div>
+            {% endif %}
+            <div class="botao_cadastro">
+                <button><a href="{% url 'despesas:cadastrar' conta.id %}">Cadastrar uma despesa</a></button>
+            </div>
+        <div class="atualizar_excluir">
+            <a href="{% url 'contas:atualizar' conta.id %}"><i class="fas fa-pen-alt"></i></a>
+            <a href="{% url 'contas:deletar' conta.id %}"><i class="fas fa-trash-alt"></i></a>
+        </div>
+    </div>
+</div>
+{% endblock %}
